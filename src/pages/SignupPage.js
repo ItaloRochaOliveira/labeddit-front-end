@@ -8,7 +8,7 @@ export const SignupPage = () => {
   return (
     <div class="flex min-h-full flex-col justify-center ">
       <div class="mb-48">
-        <div class="flex justify-between items-center bg-slate-200 h-12 ">
+        <div class="flex justify-between items-center bg-slate-200 h-12 mb-7 ">
           <div class="basis-1/4"></div>
           <div class="basis-1/2">
             <img class="mx-auto w-7 h-7 " src={logo} alt="logo da labenu" />
@@ -26,7 +26,7 @@ export const SignupPage = () => {
       </div>
 
       <div class="sm:mx-auto sm:w-full sm:max-w-sm mx-26 px-6">
-        <form class="space-y-6" type="submit">
+        <form class="space-y-6 mb-10" type="submit">
           <div class="flex items-center ">
             <input
               id="nickname"
@@ -60,10 +60,32 @@ export const SignupPage = () => {
             />
           </div>
 
+          <div class="flex flex-col gap-4 justify-center sm:mx-auto sm:w-full sm:max-w-sm mx-26 px-6">
+            <h2 class=" mt-1 text-start text-xs font-ibm leading-4 ">
+              Ao continuar, você concorda com o nosso{" "}
+              <a class="text-blue-500 underline ">Contrato de usuário</a> e
+              nossa{" "}
+              <a class="text-blue-500 underline ">Política de Privacidade</a>
+            </h2>
+
+            <div class="flex gap-2.5">
+              <div>
+                <input type="checkbox" id="to-agree" name="to-agree" />
+              </div>
+
+              <label
+                for="to-agree"
+                class=" text-start items-center text-sm font-ibm leading-4 "
+              >
+                Eu concordo em receber emails sobre coisas legais no Labeddit
+              </label>
+            </div>
+          </div>
+
           <div>
             <button
               type="submit"
-              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
             >
               Cadastrar
             </button>
