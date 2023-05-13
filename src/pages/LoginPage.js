@@ -18,7 +18,7 @@ export const LoginPage = () => {
       </div>
 
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" type="submit">
+        <form class="space-y-4" type="submit">
           <div>
             <input
               id="email"
@@ -26,7 +26,7 @@ export const LoginPage = () => {
               type="email"
               placeholder="E-mail"
               required
-              class="block w-full h-16 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full h-14 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
 
@@ -37,23 +37,23 @@ export const LoginPage = () => {
               type="password"
               placeholder="Senha"
               required
-              class="block w-full h-16 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              class="block w-full h-14 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
 
           <div>
             <button
               type="submit"
-              class="flex w-full h-13/14 justify-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
             >
-              Sign in
+              Continuar
             </button>
           </div>
           <hr />
           <div>
             <button
               onClick={() => goToSignupPage(navigate)}
-              class="flex w-full h-13 justify-center rounded-full bg-white px-3 py-1.5 text-sm font-semibold leading-6 text-orange-500 rounded-full border-orange-500 border-solid shadow-sm hover:bg-orange-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="flex w-full h-12 justify-center items-center bg-white px-3 py-1.5 text-sm font-semibold leading-6 border rounded-full text-orange-500 border-orange-500 border-solid shadow-sm hover:bg-orange-500 hover:text-white transition duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
             >
               Crie uma conta!
             </button>

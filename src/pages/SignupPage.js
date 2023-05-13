@@ -1,84 +1,74 @@
 import { logo } from "../assents/img/exportImages";
+import { goToHomePage, goToLoginPage } from "../routes/coordinator";
+import { useNavigate } from "react-router-dom";
 
 export const SignupPage = () => {
+  const navigate = useNavigate();
+
   return (
-    <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-      <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img class="mx-auto h-10 w-auto" src={logo} alt="Your Company" />
-        <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-          Sign in to your account
-        </h2>
+    <div class="flex min-h-full flex-col justify-center ">
+      <div class="mb-48">
+        <div class="flex justify-between items-center bg-slate-200 h-12 ">
+          <div class="basis-1/4"></div>
+          <div class="basis-1/2">
+            <img class="mx-auto w-7 h-7 " src={logo} alt="logo da labenu" />
+          </div>
+          <div class="basis-1/4 text-blue-500 hover:text-blue-300 ">
+            <button onClick={() => goToLoginPage(navigate)}>Entrar</button>
+          </div>
+        </div>
+
+        <div class="sm:mx-auto sm:w-full sm:max-w-sm mx-26 px-6">
+          <h2 class=" mt-1 text-center text-xl/10 font-ibm font-bold leading-10 ">
+            Olá, boas vindas ao LabEddit ;)
+          </h2>
+        </div>
       </div>
 
-      <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
-          <div>
-            <label
-              for="email"
-              class="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Email address
-            </label>
-            <div class="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autocomplete="email"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
+      <div class="sm:mx-auto sm:w-full sm:max-w-sm mx-26 px-6">
+        <form class="space-y-6" type="submit">
+          <div class="flex items-center ">
+            <input
+              id="nickname"
+              name="nickname"
+              type="nickname"
+              placeholder="Apelido"
+              required
+              class="block w-full h-14 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400  focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
           </div>
 
           <div>
-            <div class="flex items-center justify-between">
-              <label
-                for="password"
-                class="block text-sm font-medium leading-6 text-gray-900"
-              >
-                Password
-              </label>
-              <div class="text-sm">
-                <a
-                  href="#"
-                  class="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
-            </div>
-            <div class="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autocomplete="current-password"
-                required
-                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="E-mail"
+              required
+              class="block w-full h-14 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
+          </div>
+
+          <div>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Senha"
+              required
+              class="block w-full h-14 px-3 rounded-md text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+            />
           </div>
 
           <div>
             <button
               type="submit"
-              class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
             >
-              Sign in
+              Cadastrar
             </button>
           </div>
         </form>
-
-        <p class="mt-10 text-center text-sm text-gray-500">
-          Not a member?
-          <a
-            href="#"
-            class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
-          >
-            Start a 14 day free trial
-          </a>
-        </p>
       </div>
     </div>
   );
