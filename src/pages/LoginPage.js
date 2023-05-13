@@ -44,7 +44,7 @@ export const LoginPage = () => {
           <div>
             <button
               type="submit"
-              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+              class="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
             >
               Continuar
             </button>
@@ -53,7 +53,7 @@ export const LoginPage = () => {
           <div>
             <button
               onClick={() => goToSignupPage(navigate)}
-              class="flex w-full h-12 justify-center items-center bg-white px-3 py-1.5 text-sm font-semibold leading-6 border rounded-full text-orange-500 border-orange-500 border-solid shadow-sm hover:bg-orange-500 hover:text-white transition duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
+              class="flex w-full h-12 justify-center items-center bg-white px-3 py-1.5 text-lg font-semibold leading-6 border rounded-full text-orange-500 border-orange-500 border-solid shadow-sm hover:bg-orange-500 hover:text-white transition duration-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-400"
             >
               Crie uma conta!
             </button>
