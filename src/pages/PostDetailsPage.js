@@ -52,10 +52,10 @@ export const PostDetailsPage = () => {
               type="submit"
               className="flex flex-col gap-2 justify-center mb-8"
             >
-              <input
-                type="text"
-                placeholder="Escreva seu post...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                className="w-full h-36 border bg-gray-200 rounded-xl px-2 placeholder:px-2 "
+              <textarea
+                placeholder="Adicionar comentário"
+                className="w-full h-36 border bg-gray-200 rounded-xl p-4 resize-none "
+                required
               />
               <button
                 type="submit"

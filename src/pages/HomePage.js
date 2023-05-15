@@ -35,10 +35,11 @@ export const HomePage = () => {
               type="submit"
               className="flex flex-col gap-3 justify-center mb-8"
             >
-              <input
-                type="text"
-                placeholder="Escreva seu post...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-                className="w-full h-36 border bg-gray-200 rounded-xl px-2 placeholder:px-2 "
+              <textarea
+                placeholder="Escreva seu post..."
+                className="w-full h-36 border bg-gray-200 rounded-xl p-4 resize-none"
+                maxLength={"131px"}
+                required
               />
               <button
                 type="submit"
