@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
 
 export const CardPost = ({
+  id,
   name,
   content,
   numberOfLike,
   numberOfDislike,
-  comment,
+  comments,
 }) => {
   const navigate = useNavigate();
 
@@ -15,7 +16,6 @@ export const CardPost = ({
 
   const likeDislike = Number(numberOfLike) + Number(numberOfDislike);
 
-  console.log(likeDislike, numberOfLike, numberOfDislike);
   return (
     <div className="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
       <div className="font-ibm text-xs text-[#6F6F6F]">enviado por: {name}</div>
@@ -76,9 +76,10 @@ export const CardPost = ({
             <path d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"></path>
           </svg>
         </div>
+
         <div
           className="flex gap-3 h-6 rounded-full border border-[#E0E0E0] items-center px-2"
-          onClick={() => goToDetailsPage(navigate, "001")}
+          onClick={id ? () => goToDetailsPage(navigate, id) : () => {}}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -95,7 +96,7 @@ export const CardPost = ({
             />
           </svg>
 
-          <span className="text-[#6F6F6F] text-xs">{comment}</span>
+          <span className="text-[#6F6F6F] text-xs">{comments?.length}</span>
         </div>
       </div>
     </div>

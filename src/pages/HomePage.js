@@ -1,20 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { goToLoginPage } from "../routes/coordinator";
 import { useNavigate } from "react-router-dom";
 import { logo } from "../assents/img/exportImages";
 import { CardPost } from "../components/CardPost";
 import { logout } from "../utils/logout";
-import { useGetUsers } from "../hooks/UseGetUsers";
+import { useGetPosts } from "../hooks/useGetPosts";
+import { onChangeForm } from "../utils/onChangeForm";
+import { useCreatePosts } from "../hooks/useCreatePosts";
 
 export const HomePage = () => {
   const navigate = useNavigate();
 
-  const [data, loading, error, errorMessage] = useGetUsers("", {
+  const [form, setForm] = useState({ content: "" });
+  const [controllGetRequestData, setControllGetRequestData] = useState(false);
+  const [controllCreatRequestData, setControllCreatRequestData] =
+    useState(false);
+
+  const createPost = (e) => {
+    e.preventDefault();
+
+    setControllCreatRequestData(true);
+
+    setTimeout(() => {
+      setControllCreatRequestData(false);
+    }, 3000);
+  };
+
+  const authorization = {
     headers: {
       Authorization: localStorage.getItem("token"),
     },
-  });
-  console.log(data);
+  };
+
+  const [data, loading, error, errorMessage] = useGetPosts(
+    "",
+    authorization,
+    controllGetRequestData
+  );
+
+  const [
+    dataCreatedPost,
+    loadingCreatedPost,
+    errorCreatedPost,
+    errorMessageCreatedPost,
+  ] = useCreatePosts("", form, authorization, controllCreatRequestData);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -22,7 +51,22 @@ export const HomePage = () => {
     if (!token) {
       goToLoginPage(navigate);
     }
+
+    setControllGetRequestData(true);
+
+    setTimeout(() => {
+      setControllGetRequestData(false);
+    }, 3000);
   }, []);
+
+  useEffect(() => {
+    setControllGetRequestData(true);
+
+    setTimeout(() => {
+      setControllGetRequestData(false);
+    }, 3000);
+  }, [controllCreatRequestData]);
+
   return (
     <div className="flex min-h-full flex-col justify-center ">
       <div className="mb-48">
@@ -43,6 +87,10 @@ export const HomePage = () => {
               className="flex flex-col gap-3 justify-center mb-8"
             >
               <textarea
+                id="content"
+                name="content"
+                value={form.content}
+                onChange={(e) => setForm(onChangeForm(e, form))}
                 placeholder="Escreva seu post..."
                 className="w-full h-36 border bg-gray-200 rounded-xl p-4 resize-none"
                 maxLength={"131px"}
@@ -51,6 +99,7 @@ export const HomePage = () => {
               <button
                 type="submit"
                 className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#F9B24E] hover:from-[#F9B24E] transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+                onClick={(e) => createPost(e)}
               >
                 Postar
               </button>
@@ -59,17 +108,26 @@ export const HomePage = () => {
 
             {
               <div className="flex flex-col gap-2.5">
-                {data.map((user) => {
-                  return (
-                    <CardPost
-                      name={user.creator.name}
-                      content={user.content}
-                      numberOfLike={user.likes}
-                      numberOfDislike={user.dislikes}
-                      comment={2}
-                    />
-                  );
-                })}
+                {data
+                  .sort((a, b) => {
+                    const itemAtual = a.createdAt;
+                    const itemProximo = b.createdAt;
+
+                    return itemAtual > itemProximo ? -1 : 1;
+                  })
+                  .map((user) => {
+                    return (
+                      <CardPost
+                        key={user.id}
+                        id={user.id}
+                        name={user.creator.name}
+                        content={user.content}
+                        numberOfLike={user.likes}
+                        numberOfDislike={user.dislikes}
+                        comments={user.comments}
+                      />
+                    );
+                  })}
               </div>
             }
           </div>

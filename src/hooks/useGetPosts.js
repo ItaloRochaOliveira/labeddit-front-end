@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL_POST } from "../constants/BASE_URL";
 
-export const useGetUsers = (path, authorization) => {
+export const useGetPosts = (id, authorization, controllGetRequestData) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -12,10 +12,13 @@ export const useGetUsers = (path, authorization) => {
     setLoading(true);
 
     try {
-      const response = await axios.get(
-        `${BASE_URL_POST}/${path}`,
-        authorization
-      );
+      let response;
+
+      if (!id) {
+        response = await axios.get(`${BASE_URL_POST}`, authorization);
+      } else {
+        response = await axios.get(`${BASE_URL_POST}/${id}`, authorization);
+      }
 
       setData(response.data);
       setLoading(false);
@@ -30,7 +33,7 @@ export const useGetUsers = (path, authorization) => {
 
   useEffect(() => {
     loadingData();
-  }, []);
+  }, [controllGetRequestData]);
 
   return [data, loading, error, errorMessage];
 };

@@ -1,20 +1,20 @@
 import { useState } from "react";
 
-export const CardCommentPost = () => {
-  const data = {
-    name: "nomeDoUser",
-    content: "content do post",
-    numberLike: 100,
-  };
-
+export const CardCommentPost = ({
+  id,
+  name,
+  content,
+  numberOfLike,
+  numberOfDislike,
+}) => {
   const [like, setLike] = useState(false);
+
+  const likeDislike = numberOfLike + numberOfDislike;
 
   return (
     <div className="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
-      <div className="font-ibm text-xs text-[#6F6F6F]">
-        enviado por: {data.name}
-      </div>
-      <div className="font-ibm">{data.content}</div>
+      <div className="font-ibm text-xs text-[#6F6F6F]">enviado por: {name}</div>
+      <div className="font-ibm">{content}</div>
       <div className="flex gap-3">
         <div className="flex gap-3 h-6 rounded-full border border-[#E0E0E0] items-center p-px">
           {!like ? (
@@ -55,7 +55,7 @@ export const CardCommentPost = () => {
             </svg>
           )}
 
-          <span className="text-[#6F6F6F] text-xs">{data.numberLike}</span>
+          <span className="text-[#6F6F6F] text-xs">{likeDislike}</span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
