@@ -4,13 +4,20 @@ import { useNavigate } from "react-router-dom";
 import { logo } from "../assents/img/exportImages";
 import { CardPost } from "../components/CardPost";
 import { logout } from "../utils/logout";
+import { useGetUsers } from "../hooks/UseGetUsers";
 
 export const HomePage = () => {
   const navigate = useNavigate();
 
+  const [data, loading, error, errorMessage] = useGetUsers("", {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  });
+  console.log(data);
+
   useEffect(() => {
-    localStorage.setItem("token", JSON.stringify("4002"));
-    const token = JSON.parse(localStorage.getItem("token"));
+    const token = localStorage.getItem("token");
 
     if (!token) {
       goToLoginPage(navigate);
@@ -50,24 +57,21 @@ export const HomePage = () => {
             </form>
             <hr className="h-0.5 w-full bg-gradient-to-r from-pink-400 to-orange-500 rounded-full mb-6" />
 
-            <div className="flex flex-col gap-2.5">
-              <CardPost
-                name={"nomeDoUser"}
-                content={
-                  "Um texto do post, nesse caso é um exemplo de como vai aparecer, por isso ele precisa ser um texto extenso para ver como ele se comporta"
-                }
-                numberLike={122}
-                comment={22}
-              />
-              <CardPost
-                name={"nomeDoUser"}
-                content={
-                  "Um texto do post, nesse caso é um exemplo de como vai aparecer, por isso ele precisa ser um texto extenso para ver como ele se comporta"
-                }
-                numberLike={122}
-                comment={22}
-              />
-            </div>
+            {
+              <div className="flex flex-col gap-2.5">
+                {data.map((user) => {
+                  return (
+                    <CardPost
+                      name={user.creator.name}
+                      content={user.content}
+                      numberOfLike={user.likes}
+                      numberOfDislike={user.dislikes}
+                      comment={2}
+                    />
+                  );
+                })}
+              </div>
+            }
           </div>
         </div>
       </div>

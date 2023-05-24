@@ -2,10 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
 
-export const CardPost = ({ name, content, numberLike, comment }) => {
+export const CardPost = ({
+  name,
+  content,
+  numberOfLike,
+  numberOfDislike,
+  comment,
+}) => {
   const navigate = useNavigate();
 
   const [like, setLike] = useState(false);
+
+  const likeDislike = Number(numberOfLike) + Number(numberOfDislike);
+
+  console.log(likeDislike, numberOfLike, numberOfDislike);
   return (
     <div className="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
       <div className="font-ibm text-xs text-[#6F6F6F]">enviado por: {name}</div>
@@ -50,7 +60,7 @@ export const CardPost = ({ name, content, numberLike, comment }) => {
             </svg>
           )}
 
-          <span className="text-[#6F6F6F] text-xs">{numberLike}</span>
+          <span className="text-[#6F6F6F] text-xs">{likeDislike}</span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"
