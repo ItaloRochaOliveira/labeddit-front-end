@@ -60,7 +60,9 @@ export const CardPost = ({
             </svg>
           )}
 
-          <span className="text-[#6F6F6F] text-xs">{likeDislike}</span>
+          <span className="text-[#6F6F6F] text-xs">
+            {likeDislike >= 0 ? likeDislike : 0}
+          </span>
 
           <svg
             xmlns="http://www.w3.org/2000/svg"

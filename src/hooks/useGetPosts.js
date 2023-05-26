@@ -2,13 +2,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { BASE_URL_POST } from "../constants/BASE_URL";
 
-export const useGetPosts = (id, authorization, controllGetRequestData) => {
+export const useGetPosts = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMensage] = useState("");
 
-  const loadingData = async () => {
+  const loadingData = async (id, authorization) => {
     setLoading(true);
 
     try {
@@ -22,18 +22,18 @@ export const useGetPosts = (id, authorization, controllGetRequestData) => {
 
       setData(response.data);
       setLoading(false);
+
+      return response.data;
     } catch (erro) {
       console.log(erro.message);
 
       setLoading(false);
       setError(true);
       setErrorMensage(erro);
+
+      return erro.message;
     }
   };
 
-  useEffect(() => {
-    loadingData();
-  }, [controllGetRequestData]);
-
-  return [data, loading, error, errorMessage];
+  return { loadingData, loading, error, errorMessage };
 };

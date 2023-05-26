@@ -12,19 +12,6 @@ export const HomePage = () => {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({ content: "" });
-  const [controllGetRequestData, setControllGetRequestData] = useState(false);
-  const [controllCreatRequestData, setControllCreatRequestData] =
-    useState(false);
-
-  const createPost = (e) => {
-    e.preventDefault();
-
-    setControllCreatRequestData(true);
-
-    setTimeout(() => {
-      setControllCreatRequestData(false);
-    }, 3000);
-  };
 
   const authorization = {
     headers: {
@@ -32,18 +19,26 @@ export const HomePage = () => {
     },
   };
 
-  const [data, loading, error, errorMessage] = useGetPosts(
-    "",
-    authorization,
-    controllGetRequestData
-  );
+  const [data, setData] = useState([]);
+  const [response, setResponse] = useState("");
 
+  const { loadingData, loading, error, errorMessage } = useGetPosts();
   const [
-    dataCreatedPost,
+    loadingCreatePostData,
     loadingCreatedPost,
     errorCreatedPost,
     errorMessageCreatedPost,
-  ] = useCreatePosts("", form, authorization, controllCreatRequestData);
+  ] = useCreatePosts();
+
+  const toResult = async () => {
+    setData(await loadingData("", authorization));
+  };
+
+  const creatPost = async (e) => {
+    e.preventDefault();
+
+    setResponse(loadingCreatePostData("", form, authorization));
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -52,20 +47,12 @@ export const HomePage = () => {
       goToLoginPage(navigate);
     }
 
-    setControllGetRequestData(true);
-
-    setTimeout(() => {
-      setControllGetRequestData(false);
-    }, 3000);
-  }, []);
+    toResult();
+  }, [response]);
 
   useEffect(() => {
-    setControllGetRequestData(true);
-
-    setTimeout(() => {
-      setControllGetRequestData(false);
-    }, 3000);
-  }, [controllCreatRequestData]);
+    toResult();
+  }, [response]);
 
   return (
     <div className="flex min-h-full flex-col justify-center ">
@@ -99,7 +86,7 @@ export const HomePage = () => {
               <button
                 type="submit"
                 className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#F9B24E] hover:from-[#F9B24E] transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
-                onClick={(e) => createPost(e)}
+                onClick={(e) => creatPost(e)}
               >
                 Postar
               </button>
