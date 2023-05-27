@@ -8,21 +8,20 @@ export const useLikePosts = () => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMensage] = useState("");
 
-  const loadingData = async (id, authorization) => {
+  const loadingData = async (id, path, body, authorization) => {
     setLoading(true);
 
     try {
-      let response;
-
-      if (!id) {
-        response = await axios.get(`${BASE_URL_POST}`, authorization);
-      } else {
-        response = await axios.get(`${BASE_URL_POST}/${id}`, authorization);
-      }
+      const response = await axios.post(
+        `${BASE_URL_POST}/${id}/${path}/like`,
+        body,
+        authorization
+      );
 
       setData(response.data);
       setLoading(false);
 
+      console.log(response);
       return response.data;
     } catch (erro) {
       console.log(erro.message);
@@ -35,5 +34,5 @@ export const useLikePosts = () => {
     }
   };
 
-  return { loadingData, loading, error, errorMessage };
+  return [loadingData, loading, error, errorMessage];
 };
