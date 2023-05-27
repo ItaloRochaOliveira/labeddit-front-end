@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
+import { useLikePosts } from "../hooks/useLikePosts";
+import { useTokenManager } from "../hooks/useTokenManage";
 
 export const CardPost = ({
   id,
@@ -9,12 +11,37 @@ export const CardPost = ({
   numberOfLike,
   numberOfDislike,
   comments,
+  impressions,
+
+  toResult,
 }) => {
+  // console.log(impressions);
   const navigate = useNavigate();
 
-  const [like, setLike] = useState(false);
+  const [loadingData, loading, error, errorMessage] = useLikePosts();
+  const getPayload = useTokenManager();
 
-  const likeDislike = Number(numberOfLike) + Number(numberOfDislike);
+  const payload = getPayload(localStorage.getItem("token"));
+
+  // console.log(payload);
+
+  const [rate, setRate] = useState();
+  const [like, setLike] = useState(false);
+  const [dislike, setDislike] = useState(false);
+
+  const authorization = {
+    headers: {
+      Authorization: localStorage.getItem("token"),
+    },
+  };
+
+  const likeDislike = Number(numberOfLike) - Number(numberOfDislike);
+
+  useEffect(() => {
+    loadingData(id, "post", { like: rate }, authorization);
+
+    toResult();
+  }, [rate]);
 
   return (
     <div className="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
@@ -22,7 +49,7 @@ export const CardPost = ({
       <div className="font-ibm">{content}</div>
       <div className="flex gap-3">
         <div className="flex gap-3 h-6 rounded-full border border-[#E0E0E0] items-center p-px">
-          {!like ? (
+          {!like || dislike ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-5 h-5 text-[#6F6F6F] icon icon-tabler icon-tabler-arrow-big-up"
@@ -32,7 +59,11 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => setLike((like) => !like)}
+              onClick={() => {
+                setRate(true);
+                setDislike(false);
+                setLike((like) => !like);
+              }}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
@@ -49,7 +80,10 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => setLike((like) => !like)}
+              onClick={() => {
+                setRate(true);
+                setLike((like) => !like);
+              }}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path
@@ -64,19 +98,50 @@ export const CardPost = ({
             {likeDislike >= 0 ? likeDislike : 0}
           </span>
 
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-[#6F6F6F] icon icon-tabler icon-tabler-arrow-big-down"
-            viewBox="0 0 24 24"
-            stroke-width="1"
-            stroke="currentColor"
-            fill="none"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
-            <path d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"></path>
-          </svg>
+          {!dislike || like ? (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 text-[#6F6F6F] icon icon-tabler icon-tabler-arrow-big-down"
+              viewBox="0 0 24 24"
+              stroke-width="1"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              onClick={() => {
+                setRate(false);
+                setLike(false);
+                setDislike((dislike) => !dislike);
+              }}
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"></path>
+            </svg>
+          ) : (
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="w-5 h-5 text-orange-500 icon icon-tabler icon-tabler-arrow-big-down-filled"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              stroke-width="2"
+              stroke="currentColor"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              onClick={() => {
+                setRate(false);
+                setDislike((dislike) => !dislike);
+              }}
+            >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+              <path
+                d="M10 2l-.15 .005a2 2 0 0 0 -1.85 1.995v6.999l-2.586 .001a2 2 0 0 0 -1.414 3.414l6.586 6.586a2 2 0 0 0 2.828 0l6.586 -6.586a2 2 0 0 0 .434 -2.18l-.068 -.145a2 2 0 0 0 -1.78 -1.089l-2.586 -.001v-6.999a2 2 0 0 0 -2 -2h-4z"
+                stroke-width="0"
+                fill="currentColor"
+              ></path>
+            </svg>
+          )}
         </div>
 
         <div

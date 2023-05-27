@@ -1,9 +1,8 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BASE_URL_POST } from "../constants/BASE_URL";
 
 export const useGetPosts = () => {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMensage] = useState("");
@@ -20,7 +19,6 @@ export const useGetPosts = () => {
         response = await axios.get(`${BASE_URL_POST}/${id}`, authorization);
       }
 
-      setData(response.data);
       setLoading(false);
 
       return response.data;
@@ -35,5 +33,5 @@ export const useGetPosts = () => {
     }
   };
 
-  return { loadingData, loading, error, errorMessage };
+  return [loadingData, loading, error, errorMessage];
 };

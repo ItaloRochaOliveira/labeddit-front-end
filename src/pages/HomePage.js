@@ -22,7 +22,7 @@ export const HomePage = () => {
   const [data, setData] = useState([]);
   const [response, setResponse] = useState("");
 
-  const { loadingData, loading, error, errorMessage } = useGetPosts();
+  const [loadingData, loading, error, errorMessage] = useGetPosts();
   const [
     loadingCreatePostData,
     loadingCreatedPost,
@@ -47,10 +47,6 @@ export const HomePage = () => {
       goToLoginPage(navigate);
     }
 
-    toResult();
-  }, [response]);
-
-  useEffect(() => {
     toResult();
   }, [response]);
 
@@ -112,6 +108,8 @@ export const HomePage = () => {
                         numberOfLike={user.likes}
                         numberOfDislike={user.dislikes}
                         comments={user.comments}
+                        impressions={user.impressions}
+                        toResult={toResult}
                       />
                     );
                   })}
