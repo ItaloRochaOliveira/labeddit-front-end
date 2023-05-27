@@ -21,13 +21,33 @@ export const CardPost = ({
   const [loadingData, loading, error, errorMessage] = useLikePosts();
   const getPayload = useTokenManager();
 
-  const payload = getPayload(localStorage.getItem("token"));
+  const gettingPayload = async () => {
+    const payload = await getPayload(localStorage.getItem("token"));
 
-  // console.log(payload);
+    return payload;
+  };
 
-  const [rate, setRate] = useState();
+  const payload = gettingPayload();
+
+  const [rate, setRate] = useState(false);
   const [like, setLike] = useState(false);
   const [dislike, setDislike] = useState(false);
+
+  const doLike = () => {
+    loadingData(id, "post", { like: true }, authorization);
+
+    setRate(true);
+    setDislike(false);
+    setLike((like) => !like);
+  };
+
+  const doDislike = () => {
+    loadingData(id, "post", { like: false }, authorization);
+
+    setRate(true);
+    setLike(false);
+    setDislike((dislike) => !dislike);
+  };
 
   const authorization = {
     headers: {
@@ -38,9 +58,9 @@ export const CardPost = ({
   const likeDislike = Number(numberOfLike) - Number(numberOfDislike);
 
   useEffect(() => {
-    loadingData(id, "post", { like: rate }, authorization);
-
     toResult();
+
+    setRate(false);
   }, [rate]);
 
   return (
@@ -59,11 +79,7 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => {
-                setRate(true);
-                setDislike(false);
-                setLike((like) => !like);
-              }}
+              onClick={doLike}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M9 20v-8h-3.586a1 1 0 0 1 -.707 -1.707l6.586 -6.586a1 1 0 0 1 1.414 0l6.586 6.586a1 1 0 0 1 -.707 1.707h-3.586v8a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z"></path>
@@ -80,10 +96,7 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => {
-                setRate(true);
-                setLike((like) => !like);
-              }}
+              onClick={doLike}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path
@@ -108,11 +121,7 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => {
-                setRate(false);
-                setLike(false);
-                setDislike((dislike) => !dislike);
-              }}
+              onClick={doDislike}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path d="M15 4v8h3.586a1 1 0 0 1 .707 1.707l-6.586 6.586a1 1 0 0 1 -1.414 0l-6.586 -6.586a1 1 0 0 1 .707 -1.707h3.586v-8a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1z"></path>
@@ -129,10 +138,7 @@ export const CardPost = ({
               fill="none"
               stroke-linecap="round"
               stroke-linejoin="round"
-              onClick={() => {
-                setRate(false);
-                setDislike((dislike) => !dislike);
-              }}
+              onClick={doDislike}
             >
               <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
               <path

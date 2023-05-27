@@ -10,6 +10,7 @@ export const useLikePosts = () => {
 
   const loadingData = async (id, path, body, authorization) => {
     setLoading(true);
+    console.log(id);
 
     try {
       const response = await axios.post(
