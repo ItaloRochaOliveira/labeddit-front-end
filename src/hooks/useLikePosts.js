@@ -1,16 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { BASE_URL_POST } from "../constants/BASE_URL";
 
 export const useLikePosts = () => {
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMensage] = useState("");
 
   const loadingData = async (id, path, body, authorization) => {
     setLoading(true);
-    console.log(id);
 
     try {
       const response = await axios.post(
@@ -19,10 +17,8 @@ export const useLikePosts = () => {
         authorization
       );
 
-      setData(response.data);
       setLoading(false);
 
-      console.log(response);
       return response.data;
     } catch (erro) {
       console.log(erro.message);
