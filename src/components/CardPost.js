@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
 import { useLikePosts } from "../hooks/useLikePosts";
 import { useTokenManager } from "../hooks/useTokenManage";
@@ -15,19 +15,22 @@ export const CardPost = ({
 
   toResult,
 }) => {
-  // console.log(impressions);
+  const latestProps = useRef({ impressions });
+  useEffect(() => {
+    latestProps.current = { impressions };
+  });
+
   const navigate = useNavigate();
 
   const [loadingData, loading, error, errorMessage] = useLikePosts();
   const getPayload = useTokenManager();
-
   const gettingPayload = async () => {
     const payload = await getPayload(localStorage.getItem("token"));
 
-    return payload;
+    setPayload(payload);
   };
 
-  const payload = gettingPayload();
+  const [payload, setPayload] = useState("");
 
   const [rate, setRate] = useState(false);
   const [like, setLike] = useState(false);
@@ -56,6 +59,28 @@ export const CardPost = ({
   };
 
   const likeDislike = Number(numberOfLike) - Number(numberOfDislike);
+
+  const [controlUseEffect, SetControlUseEffect] = useState(false);
+
+  useEffect(() => {
+    gettingPayload();
+  }, []);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const a = latestProps.current.impressions.map((impression) => {
+      payload.id === impression.idUser &&
+        impression.like === 0 &&
+        setDislike(true);
+
+      payload.id === impression.idUser &&
+        impression.like === 1 &&
+        setLike(true);
+
+      return true;
+    });
+  }, []);
 
   useEffect(() => {
     toResult();
