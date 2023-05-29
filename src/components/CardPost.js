@@ -24,17 +24,20 @@ export const CardPost = ({
 
   const [loadingData, loading, error, errorMessage] = useLikePosts();
   const getPayload = useTokenManager();
+
+  const [payload, setPayload] = useState("");
+
   const gettingPayload = async () => {
     const payload = await getPayload(localStorage.getItem("token"));
 
     setPayload(payload);
   };
 
-  const [payload, setPayload] = useState("");
+  const result = gettingPayload();
 
   const [rate, setRate] = useState(false);
-  const [like, setLike] = useState(false);
-  const [dislike, setDislike] = useState(false);
+  const [like, setLike] = useState(null);
+  const [dislike, setDislike] = useState(null);
 
   const doLike = () => {
     loadingData(id, "post", { like: true }, authorization);
@@ -63,24 +66,20 @@ export const CardPost = ({
   const [controlUseEffect, SetControlUseEffect] = useState(false);
 
   useEffect(() => {
-    gettingPayload();
-  }, []);
-
-  useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
-    const a = latestProps.current.impressions.map((impression) => {
-      payload.id === impression.idUser &&
-        impression.like === 0 &&
-        setDislike(true);
+    if (like === null || dislike === null) {
+      latestProps.current.impressions.map((impression) => {
+        payload.id === impression.idUser &&
+          impression.like === 0 &&
+          setDislike(true);
 
-      payload.id === impression.idUser &&
-        impression.like === 1 &&
-        setLike(true);
-
-      return true;
-    });
-  }, []);
+        payload.id === impression.idUser &&
+          impression.like === 1 &&
+          setLike(true);
+      });
+    }
+  }, [impressions]);
 
   useEffect(() => {
     toResult();
