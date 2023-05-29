@@ -31,13 +31,13 @@ export const SignupPage = () => {
       setError(true);
       setErrorMensage(erro);
     }
-
-    if (!data.length) {
-      localStorage.setItem("token", JSON.stringify(await data.token));
-
-      goToHomePage(navigate);
-    }
   };
+
+  useEffect(() => {
+    localStorage.setItem("token", data.token);
+
+    goToHomePage(navigate);
+  }, [data]);
 
   return (
     <div className="flex min-h-full flex-col justify-center ">

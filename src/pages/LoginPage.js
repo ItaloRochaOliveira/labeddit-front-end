@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logo } from "../assents/img/exportImages";
 import { goToHomePage, goToSignupPage } from "../routes/coordinator";
 import { useNavigate } from "react-router-dom";
@@ -32,13 +32,13 @@ export const LoginPage = () => {
       setError(true);
       setErrorMensage(erro);
     }
-
-    if (data.message) {
-      localStorage.setItem("token", await data.token);
-
-      goToHomePage(navigate);
-    }
   };
+
+  useEffect(() => {
+    localStorage.setItem("token", data.token);
+
+    goToHomePage(navigate);
+  }, [data]);
 
   return (
     <div className="flex min-h-full flex-col justify-center mx-26 px-6 py-12 lg:px-8">
