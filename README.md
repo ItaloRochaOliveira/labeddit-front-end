@@ -13,7 +13,7 @@ Os conteúdos principais  a serem estudados são:
 - Design Systems
 
 ## 🔗Link de Acesso
-- Deploy Surge: [clique aqui!](labeddit-italo.surge.sh).
+- Deploy Surge: [clique aqui!](https://labeddit-italo.surge.sh/).
 
 ## 📄Concepção do Projeto
 
