@@ -25,9 +25,11 @@ export const PostDetailsPage = () => {
   };
 
   const [[data], setData] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
+  console.log(data);
 
-  const { loadingData, loading, error, errorMessage } = useGetPosts();
+  const [loadingData, error, errorMessage] = useGetPosts();
   const [
     loadingCreatePostData,
     loadingCreatedPost,
@@ -47,23 +49,24 @@ export const PostDetailsPage = () => {
       progress: undefined,
       theme: "light",
     }) &&
-    setTimeout(() => setErrorMessage(false), 2000);
+    setTimeout(() => setErrorMessage(false), 500);
 
   const toResult = async () => {
-    setData(await loadingData(id, authorization));
+    const response = await loadingData(id, authorization);
+
+    response.length && setData(response[0]) && setLoading(response[1]);
   };
 
   const creatPost = async (e) => {
     e.preventDefault();
 
     setResponse(await loadingCreatePostData(id, form, authorization));
-
-    toResult();
+    setForm({ content: "" });
   };
 
   useEffect(() => {
     toResult();
-  }, []);
+  }, [response]);
 
   if (error) {
   } else {
@@ -118,11 +121,14 @@ export const PostDetailsPage = () => {
 
               <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
                 <CardPost
+                  id={id}
                   name={data.creator.name}
                   content={data.content}
                   numberOfLike={data.likes}
                   numberOfDislike={data.dislikes}
                   comments={data.comments}
+                  impressions={data.impressions}
+                  toResult={toResult}
                 />
 
                 <form
@@ -149,24 +155,30 @@ export const PostDetailsPage = () => {
                 <hr className="h-0.5 w-full bg-gradient-to-r from-pink-400 to-orange-500 rounded-full mb-6" />
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
-                  {data.comments
-                    .sort((a, b) => {
-                      const itemAtual = a.createdAt;
-                      const itemProximo = b.createdAt;
+                  {console.log(data.comments.length > 0)}
+                  {data.comments.length > 0 &&
+                    data.comments
+                      .sort((a, b) => {
+                        const itemAtual = a.createdAt;
+                        const itemProximo = b.createdAt;
 
-                      return itemAtual > itemProximo ? -1 : 1;
-                    })
-                    .map((comment) => {
-                      return (
-                        <CardCommentPost
-                          key={comment.id}
-                          name={comment.creator.name}
-                          content={comment.content}
-                          numberOfLike={comment.likes}
-                          numberOfDislike={comment.dislikes}
-                        />
-                      );
-                    })}
+                        return itemAtual > itemProximo ? -1 : 1;
+                      })
+                      .map((comment) => {
+                        return (
+                          <CardCommentPost
+                            key={comment.id}
+                            id={comment.id}
+                            idCreatorComment={comment.creator.id}
+                            name={comment.creator.name}
+                            content={comment.content}
+                            numberOfLike={comment.likes}
+                            numberOfDislike={comment.dislikes}
+                            impressions={comment.impressions}
+                            toResult={toResult}
+                          />
+                        );
+                      })}
                 </div>
               </div>
             </div>

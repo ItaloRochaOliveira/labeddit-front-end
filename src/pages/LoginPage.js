@@ -35,9 +35,11 @@ export const LoginPage = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("token", data.token);
+    if (data.message) {
+      localStorage.setItem("token", data.token);
 
-    goToHomePage(navigate);
+      goToHomePage(navigate);
+    }
   }, [data]);
 
   return (

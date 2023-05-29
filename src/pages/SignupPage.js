@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logo } from "../assents/img/exportImages";
 import { goToHomePage, goToLoginPage } from "../routes/coordinator";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ export const SignupPage = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const registeringUser = async (e) => {
-    e.prevantDefault();
+    e.preventDefault();
 
     setLoading(true);
     try {
@@ -34,9 +34,11 @@ export const SignupPage = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem("token", data.token);
+    if (data.message) {
+      localStorage.setItem("token", data.token);
 
-    goToHomePage(navigate);
+      goToHomePage(navigate);
+    }
   }, [data]);
 
   return (
