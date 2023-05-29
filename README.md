@@ -1,70 +1,72 @@
-# Getting Started with Create React App
+# **Projeto Labeddit Front End**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📖 Introdução 
 
-## Available Scripts
+O ProjetoLabeddit é uma mídia que possui quatro páginas: Login page, Sign up page, Home page e Comment detail.
 
-In the project directory, you can run:
+Este projeto terá como fonte de dados para a sua criação é a labeddit API, uma API feita do zero por mim que segue todas as boas práticas e com ele é possivel manter o fluxo da aplicação.
 
-### `npm start`
+Os conteúdos principais  a serem estudados são:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- Integração de APIs
+- React Router
+- Design Systems
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🔗Link de Acesso
+- Deploy Surge: [clique aqui!](labeddit-italo.surge.sh).
 
-### `npm test`
+## 📄Concepção do Projeto
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Instalando
+```bash
+# Instalando dependências
+npm install
 
-### `npm run build`
+# executando o projeto
+npm start
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Funcionalidades
+```bash
+. Login e signup: É possível cadastrar o entrar com novos e antigos usuários;
+. Listagem: Listagem de todos os posts e comentários;
+. Detalhes: Cada card exibirá informações detalhadas ds comentários podendo curti-los;
+. Responsividade: Aplicação totalmente responsiva para Desktop, Tablet e Celulares;
+```
 
-### `npm run eject`
+### Bibliotecas Utilizadas
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+axios
+react-router-dom
+@tailwind
+@emotion/react
+@emotion/styled
+framer-motion
+@chakra-ui/icons
+react-icons
+@fontsource/inter
+@fontsource/poppins
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 💡Programas utilizados:
+- VSCode
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 💻Tecnologias 
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![CSS](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![Javascript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![Chakra-ui](https://img.shields.io/badge/tailwind-blue?style=for-the-badge&logo=tailwindcss&logoColor=ciano)
+![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 
-## Learn More
+## 📫 Contato
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+<p>Email: italo.rocha.de.oliveira@gmail.com</p>
+ <a href = "mailto:italo.rocha.de.oliveira@gmail.com"><img src="https://img.shields.io/badge/-Gmail-%23333?style=for-the-badge&logo=gmail&logoColor=white" alvo ="_blank"></a>
+  <a href="https://www.linkedin.com/in/italorochaoliveira/" target="_blank"><img src="https://img.shields.io/badge/-LinkedIn-%230077B5?style=for-the-badge&logo=linkedin&logoColor=white" target="_blank"></a>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
