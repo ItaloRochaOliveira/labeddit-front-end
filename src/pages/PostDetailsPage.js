@@ -122,6 +122,7 @@ export const PostDetailsPage = () => {
               <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
                 <CardPost
                   id={id}
+                  idCreatorPost={data.creator.id}
                   name={data.creator.name}
                   content={data.content}
                   numberOfLike={data.likes}

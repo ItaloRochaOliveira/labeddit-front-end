@@ -114,6 +114,7 @@ export const HomePage = () => {
                           <CardPost
                             key={user.id}
                             id={user.id}
+                            idCreatorPost={user.creator.id}
                             name={user.creator.name}
                             content={user.content}
                             numberOfLike={user.likes}

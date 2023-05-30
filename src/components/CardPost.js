@@ -7,6 +7,7 @@ import { ToastContainer, toast } from "react-toastify";
 
 export const CardPost = ({
   id,
+  idCreatorPost,
   name,
   content,
   numberOfLike,
@@ -38,9 +39,7 @@ export const CardPost = ({
   const doLike = () => {
     loadingData(id, "post", { like: true }, authorization);
 
-    const impression = impressions.find((imp) => imp.idUser !== payload.id);
-
-    if (impression) {
+    if (idCreatorPost !== payload.id) {
       setRate(true);
       setDislike(false);
       setLike((like) => !like);
@@ -50,9 +49,7 @@ export const CardPost = ({
   const doDislike = () => {
     loadingData(id, "post", { like: false }, authorization);
 
-    const impression = impressions.find((imp) => imp.idUser !== payload.id);
-
-    if (impression) {
+    if (idCreatorPost !== payload.id) {
       setRate(true);
       setLike(false);
       setDislike((dislike) => !dislike);
