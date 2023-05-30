@@ -21,7 +21,7 @@ export const useGetPosts = () => {
 
       setLoading(false);
 
-      return response.data;
+      return [response.data, loading];
     } catch (erro) {
       console.log(erro.message);
 
@@ -33,5 +33,5 @@ export const useGetPosts = () => {
     }
   };
 
-  return [loadingData, loading, error, errorMessage];
+  return [loadingData, error, errorMessage];
 };

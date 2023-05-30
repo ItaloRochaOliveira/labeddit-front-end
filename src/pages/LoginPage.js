@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logo } from "../assents/img/exportImages";
 import { goToHomePage, goToSignupPage } from "../routes/coordinator";
 import { useNavigate } from "react-router-dom";
@@ -32,13 +32,15 @@ export const LoginPage = () => {
       setError(true);
       setErrorMensage(erro);
     }
+  };
 
+  useEffect(() => {
     if (data.message) {
-      localStorage.setItem("token", await data.token);
+      localStorage.setItem("token", data.token);
 
       goToHomePage(navigate);
     }
-  };
+  }, [data]);
 
   return (
     <div className="flex min-h-full flex-col justify-center mx-26 px-6 py-12 lg:px-8">
@@ -85,7 +87,7 @@ export const LoginPage = () => {
           <div>
             <button
               type="submit"
-              className="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-orange-500 hover:from-orange-500 transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+              className="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
               onClick={(e) => registeringUser(e)}
             >
               Continuar

@@ -1,5 +1,5 @@
 export const goToHomePage = (navigate) => {
-  navigate("*");
+  navigate("/");
 };
 
 export const goToLoginPage = (navigate) => {

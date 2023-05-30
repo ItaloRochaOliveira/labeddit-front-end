@@ -3,9 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
 import { useLikePosts } from "../hooks/useLikePosts";
 import { useTokenManager } from "../hooks/useTokenManage";
+import { ToastContainer, toast } from "react-toastify";
 
 export const CardPost = ({
   id,
+  idCreatorPost,
   name,
   content,
   numberOfLike,
@@ -15,14 +17,9 @@ export const CardPost = ({
 
   toResult,
 }) => {
-  const latestProps = useRef({ impressions });
-  useEffect(() => {
-    latestProps.current = { impressions };
-  });
-
   const navigate = useNavigate();
 
-  const [loadingData, loading, error, errorMessage] = useLikePosts();
+  const [loadingData, loading, error, setError, errorMessage] = useLikePosts();
   const getPayload = useTokenManager();
 
   const [payload, setPayload] = useState("");
@@ -42,17 +39,21 @@ export const CardPost = ({
   const doLike = () => {
     loadingData(id, "post", { like: true }, authorization);
 
-    setRate(true);
-    setDislike(false);
-    setLike((like) => !like);
+    if (idCreatorPost !== payload.id) {
+      setRate(true);
+      setDislike(false);
+      setLike((like) => !like);
+    }
   };
 
   const doDislike = () => {
     loadingData(id, "post", { like: false }, authorization);
 
-    setRate(true);
-    setLike(false);
-    setDislike((dislike) => !dislike);
+    if (idCreatorPost !== payload.id) {
+      setRate(true);
+      setLike(false);
+      setDislike((dislike) => !dislike);
+    }
   };
 
   const authorization = {
@@ -63,13 +64,11 @@ export const CardPost = ({
 
   const likeDislike = Number(numberOfLike) - Number(numberOfDislike);
 
-  const [controlUseEffect, SetControlUseEffect] = useState(false);
-
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
 
     if (like === null || dislike === null) {
-      latestProps.current.impressions.map((impression) => {
+      impressions.map((impression) => {
         payload.id === impression.idUser &&
           impression.like === 0 &&
           setDislike(true);
@@ -86,6 +85,19 @@ export const CardPost = ({
 
     setRate(false);
   }, [rate]);
+
+  error &&
+    toast.error(errorMessage.data, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }) &&
+    setError(false);
 
   return (
     <div className="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
@@ -173,6 +185,19 @@ export const CardPost = ({
             </svg>
           )}
         </div>
+
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
 
         <div
           className="flex gap-3 h-6 rounded-full border border-[#E0E0E0] items-center px-2"

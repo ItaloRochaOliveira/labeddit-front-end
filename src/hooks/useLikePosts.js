@@ -25,11 +25,11 @@ export const useLikePosts = () => {
 
       setLoading(false);
       setError(true);
-      setErrorMensage(erro);
+      setErrorMensage(erro.response);
 
       return erro.message;
     }
   };
 
-  return [loadingData, loading, error, errorMessage];
+  return [loadingData, loading, error, setError, errorMessage];
 };

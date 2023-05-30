@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logo } from "../assents/img/exportImages";
 import { goToHomePage, goToLoginPage } from "../routes/coordinator";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +16,7 @@ export const SignupPage = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   const registeringUser = async (e) => {
-    e.prevantDefault();
+    e.preventDefault();
 
     setLoading(true);
     try {
@@ -31,13 +31,15 @@ export const SignupPage = () => {
       setError(true);
       setErrorMensage(erro);
     }
+  };
 
-    if (!data.length) {
-      localStorage.setItem("token", JSON.stringify(await data.token));
+  useEffect(() => {
+    if (data.message) {
+      localStorage.setItem("token", data.token);
 
       goToHomePage(navigate);
     }
-  };
+  }, [data]);
 
   return (
     <div className="flex min-h-full flex-col justify-center ">
