@@ -10,6 +10,7 @@ import { useCreatePosts } from "../hooks/useCreatePosts";
 import { onChangeForm } from "../utils/onChangeForm";
 import { ToastContainer, toast } from "react-toastify";
 import { MessageErro404 } from "../components/MessageErro404";
+import { ErrorPage } from "./ErrorPage";
 
 export const PostDetailsPage = () => {
   const navigate = useNavigate();
@@ -49,7 +50,7 @@ export const PostDetailsPage = () => {
       progress: undefined,
       theme: "light",
     }) &&
-    setTimeout(() => setErrorMessage(false), 500);
+    setErrorMessage(false);
 
   const toResult = async () => {
     const response = await loadingData(id, authorization);
@@ -69,6 +70,7 @@ export const PostDetailsPage = () => {
   }, [response]);
 
   if (error) {
+    return <ErrorPage error={errorMessage} />;
   } else {
     return (
       !loading &&

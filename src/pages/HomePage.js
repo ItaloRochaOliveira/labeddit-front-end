@@ -7,6 +7,7 @@ import { logout } from "../utils/logout";
 import { useGetPosts } from "../hooks/useGetPosts";
 import { onChangeForm } from "../utils/onChangeForm";
 import { useCreatePosts } from "../hooks/useCreatePosts";
+import { ErrorPage } from "./ErrorPage";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -41,12 +42,16 @@ export const HomePage = () => {
     e.preventDefault();
 
     setResponse(loadingCreatePostData("", form, authorization));
+
+    setForm({ content: "" });
   };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
 
     if (!token) {
+      localStorage.removeItem("token");
+
       goToLoginPage(navigate);
     }
 
@@ -54,6 +59,7 @@ export const HomePage = () => {
   }, [response]);
 
   if (error) {
+    return <ErrorPage error={errorMessage} />;
   } else {
     return (
       !loading &&
@@ -92,10 +98,14 @@ export const HomePage = () => {
                   />
                   <button
                     type="submit"
-                    className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#F9B24E] hover:from-[#F9B24E] transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+                    className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
                     onClick={(e) => creatPost(e)}
                   >
-                    Postar
+                    {!loading ? (
+                      "Postar"
+                    ) : (
+                      <div className="h-12 w-12 border-4 border-1-gray-200 border-r-gray-200 border-b-gray-200 border-t-orange-500 animate-spin ease-linear rounded-full" />
+                    )}
                   </button>
                 </form>
                 <hr className="h-0.5 w-full bg-gradient-to-r from-pink-400 to-orange-500 rounded-full mb-6" />
