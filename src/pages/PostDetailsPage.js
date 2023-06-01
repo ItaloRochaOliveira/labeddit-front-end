@@ -10,13 +10,13 @@ import { useCreatePosts } from "../hooks/useCreatePosts";
 import { onChangeForm } from "../utils/onChangeForm";
 import { ToastContainer, toast } from "react-toastify";
 import { MessageErro404 } from "../components/MessageErro404";
+import { ErrorPage } from "./ErrorPage";
 
 export const PostDetailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
 
   const [form, setForm] = useState({ content: "" });
-  console.log(form);
 
   const authorization = {
     headers: {
@@ -27,7 +27,6 @@ export const PostDetailsPage = () => {
   const [[data], setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState("");
-  console.log(data);
 
   const [loadingData, error, errorMessage] = useGetPosts();
   const [
@@ -37,19 +36,6 @@ export const PostDetailsPage = () => {
     setErrorMessage,
     errorMessageCreatedPost,
   ] = useCreatePosts();
-
-  errorCreatedPost &&
-    toast.error(errorMessageCreatedPost.data, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    }) &&
-    setTimeout(() => setErrorMessage(false), 500);
 
   const toResult = async () => {
     const response = await loadingData(id, authorization);
@@ -63,12 +49,30 @@ export const PostDetailsPage = () => {
     setResponse(await loadingCreatePostData(id, form, authorization));
     setForm({ content: "" });
   };
+  console.log(errorMessageCreatedPost);
+
+  errorCreatedPost &&
+    toast.error(
+      errorMessageCreatedPost.data[0].message || errorMessageCreatedPost.data,
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    ) &&
+    setErrorMessage(false);
 
   useEffect(() => {
     toResult();
-  }, [response]);
+  }, [data]);
 
   if (error) {
+    return <ErrorPage error={errorMessage} />;
   } else {
     return (
       !loading &&
@@ -145,18 +149,27 @@ export const PostDetailsPage = () => {
                     onChange={(e) => setForm(onChangeForm(e, form))}
                     required
                   />
-                  <button
-                    className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-[#F9B24E] hover:from-[#F9B24E] transition duration-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
-                    onClick={(e) => creatPost(e)}
-                  >
-                    Responder
-                  </button>
+                  {!loadingCreatedPost ? (
+                    <button
+                      className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+                      onClick={(e) => creatPost(e)}
+                    >
+                      Responder
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400 cursor-progress"
+                      disabled
+                    >
+                      <div className="h-8 w-8 border-4 border-1-gray-200 border-r-gray-200 border-b-gray-200 border-t-orange-500 animate-spin ease-linear rounded-full" />
+                    </button>
+                  )}
                 </form>
 
                 <hr className="h-0.5 w-full bg-gradient-to-r from-pink-400 to-orange-500 rounded-full mb-6" />
 
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
-                  {console.log(data.comments.length > 0)}
                   {data.comments.length > 0 &&
                     data.comments
                       .sort((a, b) => {

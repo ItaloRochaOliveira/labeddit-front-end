@@ -17,19 +17,6 @@ export const CardCommentPost = ({
   const [loadingData, loading, error, setError, errorMessage] = useLikePosts();
   const getPayload = useTokenManager();
 
-  error &&
-    toast.error(errorMessage.data, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    }) &&
-    setError(false);
-
   const [payload, setPayload] = useState("");
 
   const gettingPayload = async () => {
@@ -71,6 +58,19 @@ export const CardCommentPost = ({
   };
 
   const likeDislike = Number(numberOfLike) - Number(numberOfDislike);
+
+  error &&
+    toast.error(errorMessage.data, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }) &&
+    setError(false);
 
   useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps

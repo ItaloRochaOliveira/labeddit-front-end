@@ -29,7 +29,7 @@ export const useGetPosts = () => {
       setError(true);
       setErrorMensage(erro);
 
-      return erro.message;
+      return erro;
     }
   };
 

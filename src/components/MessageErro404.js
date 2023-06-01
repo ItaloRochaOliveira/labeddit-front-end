@@ -15,8 +15,6 @@ export const MessageErro404 = ({ value }) => {
       }, 3000);
   }, []);
 
-  console.log(style);
-
   //   style === "transform  transition-opacity trnasition duration-300"
   //     ? setStyle(
   //         (sty) => (sty = "transform transition-opacity trnasition duration-300")
