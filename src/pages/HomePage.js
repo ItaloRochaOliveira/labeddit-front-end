@@ -8,6 +8,7 @@ import { useGetPosts } from "../hooks/useGetPosts";
 import { onChangeForm } from "../utils/onChangeForm";
 import { useCreatePosts } from "../hooks/useCreatePosts";
 import { ErrorPage } from "./ErrorPage";
+import { ToastContainer, toast } from "react-toastify";
 
 export const HomePage = () => {
   const navigate = useNavigate();
@@ -29,6 +30,7 @@ export const HomePage = () => {
     loadingCreatePostData,
     loadingCreatedPost,
     errorCreatedPost,
+    setErrorCreatedPost,
     errorMessageCreatedPost,
   ] = useCreatePosts();
 
@@ -45,6 +47,19 @@ export const HomePage = () => {
 
     setForm({ content: "" });
   };
+
+  errorCreatedPost &&
+    toast.error(errorMessageCreatedPost.data[0].message, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    }) &&
+    setErrorCreatedPost(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -96,17 +111,23 @@ export const HomePage = () => {
                     maxLength={"131px"}
                     required
                   />
-                  <button
-                    type="submit"
-                    className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
-                    onClick={(e) => creatPost(e)}
-                  >
-                    {!loading ? (
-                      "Postar"
-                    ) : (
-                      <div className="h-12 w-12 border-4 border-1-gray-200 border-r-gray-200 border-b-gray-200 border-t-orange-500 animate-spin ease-linear rounded-full" />
-                    )}
-                  </button>
+                  {!loadingCreatedPost ? (
+                    <button
+                      type="submit"
+                      className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+                      onClick={(e) => creatPost(e)}
+                    >
+                      Postar
+                    </button>
+                  ) : (
+                    <button
+                      type="submit"
+                      className="flex w-full h-12 justify-center items-center rounded-xl bg-gradient-to-r from-[#FF6489] to-[#F9B24E] px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400 cursor-progress"
+                      disabled
+                    >
+                      <div className="h-8 w-8 border-4 border-1-gray-200 border-r-gray-200 border-b-gray-200 border-t-orange-500 animate-spin ease-linear rounded-full" />
+                    </button>
+                  )}
                 </form>
                 <hr className="h-0.5 w-full bg-gradient-to-r from-pink-400 to-orange-500 rounded-full mb-6" />
 
@@ -140,6 +161,19 @@ export const HomePage = () => {
               </div>
             </div>
           </div>
+
+          <ToastContainer
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
         </div>
       )
     );

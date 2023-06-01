@@ -23,20 +23,23 @@ export const SignupPage = () => {
   };
 
   error &&
-    toast.error(errorMessage.response.data[0].message, {
-      position: "top-center",
-      autoClose: 5000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-    }) &&
+    toast.error(
+      errorMessage.response.data[0].message || errorMessage.response.data,
+      {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      }
+    ) &&
     setError(false);
 
   useEffect(() => {
-    if (data?.message) {
+    if (data?.token) {
       localStorage.setItem("token", data.token);
 
       goToHomePage(navigate);
@@ -181,7 +184,7 @@ export const SignupPage = () => {
             ) : (
               <button
                 type="submit"
-                className="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400"
+                className="flex w-full h-12 justify-center items-center rounded-full bg-gradient-to-r from-pink-400 to-orange-500 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-pink-400 cursor-progress"
                 disabled
               >
                 <div className="h-8 w-8 border-4 border-1-gray-200 border-r-gray-200 border-b-gray-200 border-t-orange-500 animate-spin ease-linear rounded-full" />
