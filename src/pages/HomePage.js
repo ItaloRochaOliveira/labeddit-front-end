@@ -9,9 +9,28 @@ import { onChangeForm } from "../utils/onChangeForm";
 import { useCreatePosts } from "../hooks/useCreatePosts";
 import { ErrorPage } from "./ErrorPage";
 import { ToastContainer, toast } from "react-toastify";
+import { useTokenManager } from "../hooks/useTokenManage";
 
 export const HomePage = () => {
   const navigate = useNavigate();
+
+  const getPayload = useTokenManager();
+  const [payload, setPayload] = useState("");
+
+  const gettingPayload = async () => {
+    const payload = await getPayload(localStorage.getItem("token"));
+    console.log(payload);
+
+    setPayload(payload);
+  };
+
+  if (payload === "Token is invalid") {
+    localStorage.removeItem("token");
+
+    goToLoginPage(navigate);
+  }
+
+  const result = gettingPayload();
 
   const [form, setForm] = useState({ content: "" });
 
@@ -63,8 +82,9 @@ export const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log(payload);
 
-    if (!token) {
+    if (!token && payload === "Token is invalid") {
       localStorage.removeItem("token");
 
       goToLoginPage(navigate);
@@ -159,6 +179,7 @@ export const HomePage = () => {
                             comments={user.comments}
                             impressions={user.impressions}
                             toResult={toResult}
+                            payload={payload}
                           />
                         );
                       })}

@@ -16,21 +16,12 @@ export const CardPost = ({
   impressions,
 
   toResult,
+
+  payload,
 }) => {
   const navigate = useNavigate();
 
   const [loadingData, loading, error, setError, errorMessage] = useLikePosts();
-  const getPayload = useTokenManager();
-
-  const [payload, setPayload] = useState("");
-
-  const gettingPayload = async () => {
-    const payload = await getPayload(localStorage.getItem("token"));
-
-    setPayload(payload);
-  };
-
-  const result = gettingPayload();
 
   const [rate, setRate] = useState(false);
   const [like, setLike] = useState(null);
