@@ -48,14 +48,16 @@ export const SignupPage = () => {
 
   return (
     <div className="flex min-h-full flex-col justify-center ">
-      <div className="mb-48">
+      <div className="mb-48 sm:mb-24">
         <div className="flex justify-between items-center bg-slate-200 h-12 mb-7 ">
           <div className="basis-1/4"></div>
           <div className="basis-1/2">
             <img className="mx-auto w-7 h-7 " src={logo} alt="logo da labenu" />
           </div>
-          <div className="basis-1/4 text-blue-500 hover:text-blue-300 ">
-            <button onClick={() => goToLoginPage(navigate)}>Entrar</button>
+          <div className="flex justify-end basis-1/4 text-blue-500 hover:text-blue-300">
+            <button className="mr-5" onClick={() => goToLoginPage(navigate)}>
+              Entrar
+            </button>
           </div>
         </div>
 
