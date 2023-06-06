@@ -5,16 +5,27 @@ import { logout } from "../utils/logout";
 import { CardCommentPost } from "../components/CardCommentPost";
 import { goToHomePage } from "../routes/coordinator";
 import { useGetPosts } from "../hooks/useGetPosts";
-import { lazy, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreatePosts } from "../hooks/useCreatePosts";
 import { onChangeForm } from "../utils/onChangeForm";
 import { ToastContainer, toast } from "react-toastify";
-import { MessageErro404 } from "../components/MessageErro404";
 import { ErrorPage } from "./ErrorPage";
+import { useTokenManager } from "../hooks/useTokenManage";
 
 export const PostDetailsPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
+
+  const getPayload = useTokenManager();
+  const [payload, setPayload] = useState("");
+
+  const gettingPayload = async () => {
+    const payload = await getPayload(localStorage.getItem("token"));
+
+    setPayload(payload);
+  };
+
+  const result = gettingPayload();
 
   const [form, setForm] = useState({ content: "" });
 
@@ -124,7 +135,7 @@ export const PostDetailsPage = () => {
 
             <div className="sm:mx-auto sm:w-full sm:max-w-sm flex flex-col gap-3">
               {!data ? (
-                <div class="border border-[#E0E0E0] shadow rounded-md p-4 max-w-sm w-full mx-auto">
+                <div class="flex flex-col w-full h-full border border-[#E0E0E0] rounded-xl p-2.5 gap-5">
                   <div class="animate-pulse flex space-x-4">
                     <div class="flex-1 space-y-6 py-1">
                       <div class="grid grid-cols-6 gap-2">
@@ -212,6 +223,7 @@ export const PostDetailsPage = () => {
                     comments={data.comments}
                     impressions={data.impressions}
                     toResult={toResult}
+                    payload={payload}
                   />
                 )
               )}
@@ -275,6 +287,7 @@ export const PostDetailsPage = () => {
                           numberOfDislike={comment.dislikes}
                           impressions={comment.impressions}
                           toResult={toResult}
+                          payload={payload}
                         />
                       );
                     })

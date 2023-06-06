@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useLikePosts } from "../hooks/useLikePosts";
-import { useTokenManager } from "../hooks/useTokenManage";
 import { ToastContainer, toast } from "react-toastify";
 
 export const CardCommentPost = ({
@@ -13,19 +12,10 @@ export const CardCommentPost = ({
   impressions,
 
   toResult,
+
+  payload,
 }) => {
   const [loadingData, loading, error, setError, errorMessage] = useLikePosts();
-  const getPayload = useTokenManager();
-
-  const [payload, setPayload] = useState("");
-
-  const gettingPayload = async () => {
-    const payload = await getPayload(localStorage.getItem("token"));
-
-    setPayload(payload);
-  };
-
-  const callPayload = gettingPayload();
 
   const [rate, setRate] = useState(false);
   const [like, setLike] = useState(null);

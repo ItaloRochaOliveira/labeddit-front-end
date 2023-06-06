@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { goToDetailsPage } from "../routes/coordinator";
 import { useLikePosts } from "../hooks/useLikePosts";
-import { useTokenManager } from "../hooks/useTokenManage";
 import { ToastContainer, toast } from "react-toastify";
 
 export const CardPost = ({
