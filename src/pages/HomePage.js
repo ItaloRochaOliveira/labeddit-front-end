@@ -19,7 +19,6 @@ export const HomePage = () => {
 
   const gettingPayload = async () => {
     const payload = await getPayload(localStorage.getItem("token"));
-    console.log(payload);
 
     setPayload(payload);
   };
@@ -82,9 +81,8 @@ export const HomePage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log(payload);
 
-    if (!token && payload === "Token is invalid") {
+    if (!token) {
       localStorage.removeItem("token");
 
       goToLoginPage(navigate);
