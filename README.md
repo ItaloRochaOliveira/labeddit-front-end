@@ -7,9 +7,6 @@ O ProjetoLabeddit é uma mídia que possui quatro páginas: Login page, Sign up 
 Este projeto terá como fonte de dados para a sua criação é a labeddit API, uma API feita do zero por mim que segue todas as boas práticas e com ele é possivel manter o fluxo da aplicação. Segue o anexo: 
 [clique aqui!](https://github.com/ItaloRochaOliveira/labeddit-back-end)
 
-STATUS: em processo...
-
-
 Os conteúdos principais  a serem estudados são:
 
 - Integração de APIs
